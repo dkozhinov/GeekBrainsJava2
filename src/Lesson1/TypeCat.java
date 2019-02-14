@@ -8,16 +8,18 @@ package Lesson1;
  */
 
 public enum TypeCat {
-    PERSIAN(0.7,0.6, 0), BRITISH(0.6, 0.5,0),
-    CHESHIRE(0.9, 0.8,0);
+    PERSIAN("Persian",0.7,0.6, 0), BRITISH("British",0.6, 0.5,0),
+    CHESHIRE("Cheshire",0.9, 0.8,0);
 
+    private String nameOfType;
     private double rateOfJump;
     private double rateOfRun;
     private double rateOfSwim;
 
 
-    TypeCat(double rateOfJump, double rateOfRun, double rateOfSwim)
+    TypeCat(String nameOfType, double rateOfJump, double rateOfRun, double rateOfSwim)
     {
+        this.nameOfType = nameOfType;
         this.rateOfJump = rateOfJump;
         this.rateOfRun = rateOfRun;
         this.rateOfSwim = rateOfSwim;
@@ -33,5 +35,7 @@ public enum TypeCat {
     public double getRateOfSwim() {
         return rateOfSwim;
     }
-
+    public String getNameOfType() {
+        return nameOfType;
+    }
 }

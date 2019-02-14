@@ -33,4 +33,6 @@ public abstract class Animal implements Jumping, Runing, Swiming
     {
         return name;
     }
+    public abstract String getType();
 }
+

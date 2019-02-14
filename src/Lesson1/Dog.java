@@ -40,7 +40,12 @@ public class Dog extends Animal{
     @Override
     public String toString()
     {
-        return "Dog{" + "type='" + type + '\'' + "} " + super.toString();
+        return  getType() + " " + super.toString();
+    }
+
+    @Override
+    public String getType() {
+        return "Dog{" + "type='" + type.getNameOfType() + '\'' + "}";
     }
 
 }

@@ -26,11 +26,8 @@ public class TournamentLauncher {
         members.add(member3);
         members.add(member4);
 
-        for (Animal animal : members)
-        {
-            System.out.println(animal.toString() + ":" + animal.jump(1));
-        }
-
+        Team team = new Team(members);
+        team.GetTeamInfo();
 
     }
 }

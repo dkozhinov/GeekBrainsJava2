@@ -8,15 +8,17 @@ package Lesson1;
  */
 
 public enum GenderHuman {
-    MALE(1,1, 0.8), FEMALE(0.8, 0.6,0.7);
+    MALE("Male",1,1, 0.8), FEMALE("Female",0.8, 0.6,0.7);
 
+    private String nameOfType;
     private double rateOfJump;
     private double rateOfRun;
     private double rateOfSwim;
 
 
-    GenderHuman(double rateOfJump, double rateOfRun, double rateOfSwim)
+    GenderHuman(String nameOfType, double rateOfJump, double rateOfRun, double rateOfSwim)
     {
+        this.nameOfType = nameOfType;
         this.rateOfJump = rateOfJump;
         this.rateOfRun = rateOfRun;
         this.rateOfSwim = rateOfSwim;
@@ -31,6 +33,9 @@ public enum GenderHuman {
     }
     public double getRateOfSwim() {
         return rateOfSwim;
+    }
+    public String getNameOfType() {
+        return nameOfType;
     }
 
 }

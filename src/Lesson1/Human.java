@@ -40,7 +40,12 @@ public class Human extends Animal {
     @Override
     public String toString()
     {
-        return "Human{" + "type='" + type + '\'' + "} " + super.toString();
+        return  getType() + " " + super.toString();
+    }
+
+    @Override
+    public String getType() {
+        return "Human{" + "type='" + type.getNameOfType() + '\'' + "}";
     }
 
 }

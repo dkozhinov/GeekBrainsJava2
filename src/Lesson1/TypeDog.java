@@ -8,16 +8,18 @@ package Lesson1;
  */
 
 public enum TypeDog {
-    BULDOG(0.4,1.2, 0.5), GERMANSHEPHERD(0.8, 1.8,0.6),
-    LABRADOR(0.5, 1.0,0.7);
+    BULDOG("Buldog",0.4,1.2, 0.5), GERMANSHEPHERD("GermanShepherd",0.8, 1.8,0.6),
+    LABRADOR("Labrador", 0.5, 1.0,0.7);
 
+    private String nameOfType;
     private double rateOfJump;
     private double rateOfRun;
     private double rateOfSwim;
 
 
-    TypeDog(double rateOfJump, double rateOfRun, double rateOfSwim)
+    TypeDog(String nameOfType, double rateOfJump, double rateOfRun, double rateOfSwim)
     {
+        this.nameOfType = nameOfType;
         this.rateOfJump = rateOfJump;
         this.rateOfRun = rateOfRun;
         this.rateOfSwim = rateOfSwim;
@@ -32,5 +34,8 @@ public enum TypeDog {
     }
     public double getRateOfSwim() {
         return rateOfSwim;
+    }
+    public String getNameOfType() {
+        return nameOfType;
     }
 }
