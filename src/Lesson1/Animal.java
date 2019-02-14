@@ -7,16 +7,18 @@ package Lesson1;
  * Created on 14.02.2019
  */
 
-public abstract class Animal implements Jumping, Runing, Swiming
+public abstract class Animal implements Jumping, Running, Swiming
 {
     private int age;
     private String name;
+    private boolean result;
 
 
     public Animal(int age, String name)
     {
         this.age = age;
         this.name = name;
+        this.result = false;
     }
 
     @Override
@@ -34,5 +36,12 @@ public abstract class Animal implements Jumping, Runing, Swiming
         return name;
     }
     public abstract String getType();
+    public boolean getResult() {
+        return result;
+    }
+
+    public void setResult(boolean result) {
+        this.result = result;
+    }
 }
 

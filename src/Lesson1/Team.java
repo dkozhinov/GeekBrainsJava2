@@ -27,11 +27,33 @@ public class Team {
         return members;
     }
 
-    public void GetTeamInfo() {
+    public void GetTeamSuccessfulResultInfo() {
+        int counter=0;
+        System.out.println("Информация о членах команды прошедших дистанцию:");
+
         for (Animal animal : members)
         {
-            System.out.println(animal.toString());
+            if (animal.getResult()) {
+                counter++;
+                System.out.println(" " + animal.toString());
+            }
+        }
+
+        if (counter==0) {
+            System.out.println(" никто не прошел дистанцию.");
         }
 
     }
+
+
+    public void GetTeamInfo() {
+        System.out.println("Информация обо всех членах команды:");
+
+        for (Animal animal : members)
+        {
+            System.out.println(" " + animal.toString());
+        }
+
+    }
+
 }

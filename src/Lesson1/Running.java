@@ -7,6 +7,6 @@ package Lesson1;
  * Created on 14.02.2019
  */
 
-public interface Runing {
+public interface Running {
     boolean run (double distanceInMeters);
 }

@@ -26,8 +26,18 @@ public class TournamentLauncher {
         members.add(member3);
         members.add(member4);
 
+        // Инициализация массивов испытаний с ссответствующей дистанцией в метрах
+        TypeCurse[] coursesName = {TypeCurse.JUMPING, TypeCurse.RUNNING, TypeCurse.SWIMING};
+        //double[] coursesDistanseInMeters = {0.9, 20.0, 0};
+        double[] coursesDistanseInMeters = {0.9, 200.0, 3};
+
+
         Team team = new Team(members);
+        Course course = new Course(coursesName, coursesDistanseInMeters, members);
+
         team.GetTeamInfo();
+        course.doIt();
+        team.GetTeamSuccessfulResultInfo();
 
     }
 }
