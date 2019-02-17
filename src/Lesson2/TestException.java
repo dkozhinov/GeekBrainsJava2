@@ -10,13 +10,23 @@ package Lesson2;
 public class TestException {
 
     public static void main(String[] args) {
-        String[][] array = { {"11","12","13","14"}, {"21","22","23","24","q"}, {"31","32","33","34"}, {"41","42","43","44"} };
+        //String[][] array = { {"11","12","13","14"}, {"21","22","23","24"}, {"31","32","33","34"}, {"41","42","43","44"} };
+        //String[][] array = { {"11","12","13","14"}, {"99", "21","22","23","24"}, {"31","32","33","34"}, {"41","42","43","44"} };
+        String[][] array = { {"11","12","13","14"}, {"21","q22","23","24"}, {"31","32","33","34"}, {"41","42","43","44"} };
 
         try {
             MyArray myArray = new MyArray(array);
-        }  catch (MyArraySizeException e) {
+            myArray.printArray();
+            System.out.println("Сумма элементов массива=" + myArray.sumArray());
+        }
+        catch (MyArraySizeException e) {
             System.out.println(e.printException());
         }
+        catch (MyArrayDataException e) {
+            System.out.println(e.printException());
+        }
+        System.out.println("Программа завершена.");
+
 
     }
 }

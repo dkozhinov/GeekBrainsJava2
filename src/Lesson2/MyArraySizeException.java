@@ -19,7 +19,7 @@ public class MyArraySizeException extends RuntimeException {
 
     public String printException() {
 
-        return "Получено исключение MyArraySizeException.\nРазмерность массива отличается от заданного размера " + i + "х" + j + " !";
+        return "Получено исключение MyArraySizeException. Размерность массива отличается от заданного размера " + i + "х" + j + " !";
     }
 
 }
