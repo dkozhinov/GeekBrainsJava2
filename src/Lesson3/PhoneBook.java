@@ -44,7 +44,14 @@ public class PhoneBook {
                 System.out.println(fio + ":" + phoneNumberArrayList.get(i));
             }
         }
+    }
 
+    // перебор всех элементов списка
+    public void getAll() {
+        for (int i = 0; i < fioArrayList.size(); i++)
+        {
+            System.out.println(fioArrayList.get(i) + ":" + phoneNumberArrayList.get(i));
+        }
     }
 
 }

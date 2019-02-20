@@ -46,6 +46,7 @@ public class Lesson3Launcher {
             Integer frequency = stringHashMap.get(s);
             stringHashMap.put(s, frequency == null ? 1 : frequency + 1);
         }
+        System.out.println("Выполнен подсчет, сколько раз встречается каждое слово:");
         System.out.println(stringHashMap);
 
 
@@ -60,11 +61,16 @@ public class Lesson3Launcher {
         phoneBook.add("Иванов", "123-456-00");
         phoneBook.add("Петров", "223-456-78");
         phoneBook.add("Сидоров", "323-456-78");
+        phoneBook.add("Иванов", "223-000-01");
 
+        System.out.println("\nПеребор всех элементов списка:");
+        phoneBook.getAll();
+
+        System.out.println("\nПоиск в телефонном справочнике по фамилии:");
         String fio = "Иванов";
         phoneBook.get(fio);
-        //fio = "Петров";
-        //phoneBook.get(fio);
+        fio = "Петров";
+        phoneBook.get(fio);
 
     }
 
