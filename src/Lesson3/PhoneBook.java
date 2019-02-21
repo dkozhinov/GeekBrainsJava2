@@ -1,8 +1,7 @@
 package Lesson3;
 
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Java. Level 2. Lesson 3. Homework.
@@ -19,39 +18,43 @@ import java.util.List;
 // однофамильцев), тогда при запросе такой фамилии должны выводиться все телефоны.
 public class PhoneBook {
 
-    private List<String> fioArrayList;
-    private List<String> phoneNumberArrayList;
+    private Set<String> phoneNumberHashSet;
+    private Map<String, Set<String>> phoneBookHashMap;
 
     public PhoneBook() {
-        this.fioArrayList = new ArrayList<>();
-        this.phoneNumberArrayList = new ArrayList<>();
+        this.phoneBookHashMap = new HashMap<>();
     }
 
     public void add(String fio, String phoneNumber) {
-        int index = fioArrayList.size();
-        if (index != phoneNumberArrayList.size()) {
-            System.out.println("Телефонный справочник поврежден!");
-            return;
+        if (phoneBookHashMap.containsKey(fio)) {
+            phoneNumberHashSet = phoneBookHashMap.get(fio);
         }
-        fioArrayList.add(index, fio);
-        phoneNumberArrayList.add(index, phoneNumber);
+        else {
+            phoneNumberHashSet = new HashSet<>();
+        }
+        phoneNumberHashSet.add(phoneNumber);
+        phoneBookHashMap.put(fio,phoneNumberHashSet);
     }
 
     public void get(String fio) {
-        for (int i = 0; i < fioArrayList.size(); i++)
-        {
-            if ( fioArrayList.get(i) == fio) {
-                System.out.println(fio + ":" + phoneNumberArrayList.get(i));
-            }
+        if (phoneBookHashMap.containsKey(fio)) {
+            phoneNumberHashSet = phoneBookHashMap.get(fio);
+            System.out.println(fio + ":" + phoneNumberHashSet);
         }
+        else {
+            System.out.println(fio + " отсутствует в телефонном справочнике!");
+        }
+
     }
 
     // перебор всех элементов списка
     public void getAll() {
-        for (int i = 0; i < fioArrayList.size(); i++)
-        {
-            System.out.println(fioArrayList.get(i) + ":" + phoneNumberArrayList.get(i));
+        // перебор элементов Entry отображения с помощью for
+        for (String key : phoneBookHashMap.keySet()) {
+            phoneNumberHashSet = phoneBookHashMap.get(key);
+            System.out.println(key + ":" + phoneNumberHashSet);
         }
+
     }
 
 }
