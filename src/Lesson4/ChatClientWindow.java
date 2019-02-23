@@ -20,48 +20,43 @@ import java.awt.*;
 public class ChatClientWindow extends JFrame {
 
     public ChatClientWindow() {
-        super("Окно клиента чата");
+        super("Окно для клиентской части чата");
         setDefaultCloseOperation( EXIT_ON_CLOSE );
 
-        /*
-        // Устанавливаем последовательное расположение
-        Container container = getContentPane();
-        container.setLayout(new FlowLayout( FlowLayout.LEFT, 10, 10));
-        // Простая кнопка
-        JButton button = new JButton("Обычная кнопка");
-        container.add(button);
-        */
-
         // Размещение таблиц в панели с блочным расположением
-        Box contents = new Box(BoxLayout.Y_AXIS);
+        Box boxContents = new Box(BoxLayout.Y_AXIS);
 
-        JTextArea textArea = new JTextArea(20,40);
-        textArea.append("This is an non editable JTextArea.This is an non editable JTextArea.This is an non editable JTextArea.This is an non editable JTextArea.");
+        boxContents.setBorder(BorderFactory.createEmptyBorder(20, 5, 20, 5));
+        JTextArea textArea = new JTextArea(15,40);
+        textArea.setToolTipText("Окно для отображения переписки");
         textArea.setLineWrap(true);
         textArea.setEditable(false);
         JScrollPane textAreaScrollPane = new JScrollPane(textArea,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        contents.add(Box.createVerticalStrut(20));
-        contents.add(textAreaScrollPane);
+        boxContents.add(textAreaScrollPane);
+        boxContents.add(Box.createVerticalStrut(20));
 
-        /*
-        JTextField bigTextField = new JTextField("" , 25);
-        bigTextField.setToolTipText("Текстовое поле для отображения переписки");
-        bigTextField.setEditable(false);
-        bigTextField.setHorizontalAlignment(JTextField.LEFT);
-        contents.add(Box.createVerticalStrut(20));
-        contents.add(bigTextField);
-        */
-        
+
+        JTextField textField = new JTextField("" , 25);
+        textField.setToolTipText("Поле для отправки сообщения");
+        textField.setEditable(true);
+        textField.setHorizontalAlignment(JTextField.LEFT);
+        // Делаем текстовое поле в одну строку
+        final Dimension maxSize = textField.getMaximumSize();
+        maxSize.height = textField.getPreferredSize().height;
+        textField.setMaximumSize(maxSize);
+        //Размещаем текстовое поле в Box'е
+        boxContents.add(textField);
+        boxContents.add(Box.createVerticalStrut(20));
+
+
         // Кнопка отправки сообщения
         JButton button = new JButton("Отправить сообщение");
         button.setAlignmentX(CENTER_ALIGNMENT);
-        contents.add(Box.createVerticalStrut(20));
-        contents.add(button);
-        contents.add(Box.createVerticalStrut(20));
+        boxContents.add(button);
 
         // Вывод окна на экран
-        setContentPane(contents);
-        setSize(500, 400);
+        setContentPane(boxContents);
+        setSize(800, 600);
         setVisible(true);
 
 
