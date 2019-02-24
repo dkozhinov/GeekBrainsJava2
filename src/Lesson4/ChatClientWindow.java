@@ -23,16 +23,23 @@ import java.time.format.DateTimeFormatter;
 
 public class ChatClientWindow extends JFrame {
 
+    // Инициализация панели с блочным расположением
+    private Box boxContents = new Box(BoxLayout.Y_AXIS);
+    // Инициализация текстового поля для отображения переписки
+    private JTextArea textArea = new JTextArea(15,40);
+    // Инициализация однострочного текстового поля для ввода сообщений
+    private JTextField textField = new JTextField("");
+    // Инициализация кнопки отправки сообщения
+    private JButton button = new JButton("Отправить сообщение");
+
     public ChatClientWindow() {
         super("Окно для клиентской части чата");
         setDefaultCloseOperation( EXIT_ON_CLOSE );
 
         // Размещение в панели с блочным расположением
-        Box boxContents = new Box(BoxLayout.Y_AXIS);
         boxContents.setBorder(BorderFactory.createEmptyBorder(20, 5, 20, 5));
 
-        // Текстовое поле для отображения переписки
-        JTextArea textArea = new JTextArea(15,40);
+        // Размещение текстового поля для отображения переписки
         textArea.setToolTipText("Окно для отображения переписки");
         textArea.setLineWrap(true);
         textArea.setEditable(false);
@@ -40,8 +47,7 @@ public class ChatClientWindow extends JFrame {
         boxContents.add(textAreaScrollPane);
         boxContents.add(Box.createVerticalStrut(20));
 
-        // Однострочное текстовое поле для ввода сообщений
-        JTextField textField = new JTextField("");
+        // Размещение однострочного текстового поля для ввода сообщений
         textField.setToolTipText("Поле для отправки сообщения");
         textField.setEditable(true);
         textField.setHorizontalAlignment(JTextField.LEFT);
@@ -50,15 +56,14 @@ public class ChatClientWindow extends JFrame {
         maxSize.height = textField.getPreferredSize().height;
         textField.setMaximumSize(maxSize);
         textField.requestFocus();
-        textField.addActionListener(new ListenerAction(textArea, textField));
+        textField.addActionListener(new ListenerAction());
         boxContents.add(textField);
         boxContents.add(Box.createVerticalStrut(10));
 
 
-        // Кнопка отправки сообщения
-        JButton button = new JButton("Отправить сообщение");
+        // Размещение кнопки отправки сообщения
         button.setAlignmentX(CENTER_ALIGNMENT);
-        button.addActionListener(new ListenerAction(textArea, textField));
+        button.addActionListener(new ListenerAction());
         boxContents.add(button);
 
         // Вывод окна на экран
@@ -67,26 +72,21 @@ public class ChatClientWindow extends JFrame {
         setVisible(true);
 
     }
-}
 
-// Общий класс обработки событий для кнопки и по нажатию Enter в однострочном текстовом поле
-class ListenerAction implements ActionListener {
-
-    private JTextArea textArea;
-    private JTextField textField;
-
-    public ListenerAction(JTextArea textArea, JTextField textField) {
-        this.textArea = textArea;
-        this.textField = textField;
-    }
-
-    @Override
-    public void actionPerformed ( ActionEvent e ) {
-        if (textField.getText() != null && !textField.getText().trim().isEmpty()) {
-            LocalDateTime dateTime = LocalDateTime.now(); // gets the current date and time
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
-            textArea.append("[" + dateTime.format(formatter) + "] " + textField.getText() + "\n");
-            textField.setText("");
+    // Общий внутренний класс (т.е. вложенный нестатический класс) обработки событий
+    // для кнопки, а так же по нажатию Enter в однострочном текстовом поле
+    class ListenerAction implements ActionListener {
+        @Override
+        public void actionPerformed ( ActionEvent e ) {
+            if (textField.getText() != null && !textField.getText().trim().isEmpty()) {
+                LocalDateTime dateTime = LocalDateTime.now(); // gets the current date and time
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+                textArea.append("[" + dateTime.format(formatter) + "] " + textField.getText() + "\n");
+                textField.setText("");
+            }
         }
     }
+
 }
+
+
