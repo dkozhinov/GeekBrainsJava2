@@ -2,6 +2,10 @@ package Lesson4;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  * Java. Level 2. Lesson 4. Homework.
@@ -23,10 +27,11 @@ public class ChatClientWindow extends JFrame {
         super("Окно для клиентской части чата");
         setDefaultCloseOperation( EXIT_ON_CLOSE );
 
-        // Размещение таблиц в панели с блочным расположением
+        // Размещение в панели с блочным расположением
         Box boxContents = new Box(BoxLayout.Y_AXIS);
-
         boxContents.setBorder(BorderFactory.createEmptyBorder(20, 5, 20, 5));
+
+        // Текстовое поле для отображения переписки
         JTextArea textArea = new JTextArea(15,40);
         textArea.setToolTipText("Окно для отображения переписки");
         textArea.setLineWrap(true);
@@ -35,8 +40,8 @@ public class ChatClientWindow extends JFrame {
         boxContents.add(textAreaScrollPane);
         boxContents.add(Box.createVerticalStrut(20));
 
-
-        JTextField textField = new JTextField("" , 25);
+        // Однострочное текстовое поле для ввода сообщений
+        JTextField textField = new JTextField("");
         textField.setToolTipText("Поле для отправки сообщения");
         textField.setEditable(true);
         textField.setHorizontalAlignment(JTextField.LEFT);
@@ -44,14 +49,16 @@ public class ChatClientWindow extends JFrame {
         final Dimension maxSize = textField.getMaximumSize();
         maxSize.height = textField.getPreferredSize().height;
         textField.setMaximumSize(maxSize);
-        //Размещаем текстовое поле в Box'е
+        textField.requestFocus();
+        textField.addActionListener(new ListenerAction(textArea, textField));
         boxContents.add(textField);
-        boxContents.add(Box.createVerticalStrut(20));
+        boxContents.add(Box.createVerticalStrut(10));
 
 
         // Кнопка отправки сообщения
         JButton button = new JButton("Отправить сообщение");
         button.setAlignmentX(CENTER_ALIGNMENT);
+        button.addActionListener(new ListenerAction(textArea, textField));
         boxContents.add(button);
 
         // Вывод окна на экран
@@ -59,8 +66,27 @@ public class ChatClientWindow extends JFrame {
         setSize(800, 600);
         setVisible(true);
 
+    }
+}
 
+// Общий класс обработки событий для кнопки и по нажатию Enter в однострочном текстовом поле
+class ListenerAction implements ActionListener {
 
+    private JTextArea textArea;
+    private JTextField textField;
 
+    public ListenerAction(JTextArea textArea, JTextField textField) {
+        this.textArea = textArea;
+        this.textField = textField;
+    }
+
+    @Override
+    public void actionPerformed ( ActionEvent e ) {
+        if (textField.getText() != null && !textField.getText().trim().isEmpty()) {
+            LocalDateTime dateTime = LocalDateTime.now(); // gets the current date and time
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+            textArea.append("[" + dateTime.format(formatter) + "] " + textField.getText() + "\n");
+            textField.setText("");
+        }
     }
 }
