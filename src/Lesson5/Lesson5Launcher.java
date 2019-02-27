@@ -21,6 +21,10 @@ public class Lesson5Launcher {
         // потом склеивает эти массивы обратно в один
         myThread.makeArrayWithThread();
 
+        // Метод разбивает массив на четыре массива, в двух потоках высчитывает новые значения и
+        // потом склеивает эти массивы обратно в один
+        myThread.makeArrayWithThread4();
+
     }
 
 }

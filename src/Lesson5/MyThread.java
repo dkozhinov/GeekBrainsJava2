@@ -65,6 +65,59 @@ public class MyThread {
     }
 
 
+    // Метод разбивает массив на четыре массива, в двух потоках высчитывает новые значения и
+    // потом склеивает эти массивы обратно в один
+    public void makeArrayWithThread4() {
+        float[] array = new float[SIZE];
+        float[] array1 = new float[QUARTER];
+        float[] array2 = new float[QUARTER];
+        float[] array3 = new float[QUARTER];
+        float[] array4 = new float[QUARTER];
+
+        // Заполняем массив единицами
+        for(int i=0; i < SIZE; i++) { array[i]=1; }
+
+        // Засекаем время начала и выполняем вычисления
+        long startTime = System.currentTimeMillis();
+        // Разбиваем массив на два отдельных массива
+        System.arraycopy(array,0,array1,0,QUARTER);
+        System.arraycopy(array,QUARTER,array2,0,QUARTER);
+        System.arraycopy(array,HALF,array3,0,QUARTER);
+        System.arraycopy(array,HALF+QUARTER,array4,0,QUARTER);
+        // Вычисляем в отдельных потоках
+        new Thread() {
+            @Override
+            public void run() {
+                for (int i = 0; i < QUARTER; i++) { array1[i] = calculate(array1[i],i); }
+            }
+        }.start();
+        new Thread() {
+            @Override
+            public void run() {
+                for (int i = 0; i < QUARTER; i++) { array2[i] = calculate(array2[i],i); }
+            }
+        }.start();
+        new Thread() {
+            @Override
+            public void run() {
+                for (int i = 0; i < QUARTER; i++) { array3[i] = calculate(array3[i],i); }
+            }
+        }.start();
+        new Thread() {
+            @Override
+            public void run() {
+                for (int i = 0; i < QUARTER; i++) { array4[i] = calculate(array4[i],i); }
+            }
+        }.start();
+        // Собираем значения из двух массивов обратно в исходный массив
+        System.arraycopy(array1,0,array,0,QUARTER);
+        System.arraycopy(array2,0,array,QUARTER,QUARTER);
+        System.arraycopy(array3,0,array,HALF,QUARTER);
+        System.arraycopy(array4,0,array,HALF+QUARTER,QUARTER);
+        System.out.println("makeArrayWithThread4: время выполнения=" + (System.currentTimeMillis() - startTime) + " милисекунд.");
+
+    }
+
 
     // Выполнение вычислений
     private float calculate(float value, float index) {
