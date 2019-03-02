@@ -11,9 +11,9 @@ import java.util.HashSet;
 
 public class MyThread {
 
-    private static final int SIZE = 10000000;
-    private static final int HALF = SIZE/2;
-    private static final int QUARTER = SIZE/4;
+    static final int SIZE = 10000000;
+    static final int HALF = SIZE/2;
+    static final int QUARTER = SIZE/4;
 
     private float[] array = new float[SIZE];
     private float[] array1 = new float[HALF];
@@ -22,16 +22,14 @@ public class MyThread {
     private float[] array4 = new float[QUARTER];
 
 
-    public MyThread() {
-        // Заполняем исходный массив единицами
-        initializationInitialArray();
-    }
-
 
     // Метод "бежит" по массиву и вычисляет значения
     public void makeArray() {
+        initializationInitialArray();                   // Заполняем исходный массив единицами
         long startTime = System.currentTimeMillis();    // Засекаем время начала и выполняем вычисления
+
         calculateInArray(SIZE, array);                    // Выполнение вычислений в массиве
+
         System.out.println("MakeArray: время выполнения=" + (System.currentTimeMillis() - startTime) + " милисекунд.");
     }
 
@@ -40,6 +38,7 @@ public class MyThread {
     // Метод разбивает массив на два массива, в двух потоках высчитывает новые значения и
     // потом склеивает эти массивы обратно в один
     public void makeArrayWithThread() {
+        initializationInitialArray();                   // Заполняем исходный массив единицами
         long startTime = System.currentTimeMillis();    // Засекаем время начала и выполняем вычисления
 
         // Разбиваем массив на два отдельных массива
@@ -70,6 +69,8 @@ public class MyThread {
     // Метод разбивает массив на четыре массива, в двух потоках высчитывает новые значения и
     // потом склеивает эти массивы обратно в один
     public void makeArrayWithThread4() {
+
+        initializationInitialArray();                   // Заполняем исходный массив единицами
         long startTime = System.currentTimeMillis();    // Засекаем время начала и выполняем вычисления
 
         // Разбиваем массив на четыре отдельных массива
@@ -110,6 +111,7 @@ public class MyThread {
 
     // Заполняем массив единицами
     private void initializationInitialArray() {
+        for(int i=0; i < SIZE; i++) { array[i]=1; }
     }
 
 
