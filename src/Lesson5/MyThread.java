@@ -111,7 +111,7 @@ public class MyThread {
 
     // Заполняем массив единицами
     private void initializationInitialArray() {
-        for(int i=0; i < SIZE; i++) { array[i]=1; }
+        for(int i=0; i < this.SIZE; i++) { this.array[i]=1; }
     }
 
 
