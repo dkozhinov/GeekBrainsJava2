@@ -16,6 +16,8 @@ import java.net.Socket;
 public class ClientChat {
     public static void main(String[] args)
     {
+
+
         try (Socket s = new Socket("localhost", 3345);
              BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
              DataOutputStream dataOutputStream = new DataOutputStream(s.getOutputStream());
@@ -23,18 +25,23 @@ public class ClientChat {
         {
 
             System.out.println("Client connected with server.");
+            String outputMessage = dataInputStream.readUTF();
+            System.out.println("Read info from server [" + outputMessage + "]");
 
             while (!s.isOutputShutdown())
             {
                 if (br.ready())
                 {
-                    String msg = br.readLine();
+                    String inputMessage = br.readLine();
 
-                    dataOutputStream.writeUTF(msg);
+                    dataOutputStream.writeUTF(inputMessage);
                     dataOutputStream.flush();
-                    System.out.println("Client sent message=" + msg);
+                    System.out.println("Client sent message [" + inputMessage + "]");
 
-                    if (msg.equalsIgnoreCase("quit")) {
+                    outputMessage = dataInputStream.readUTF();
+                    System.out.println("Read info from server [" + outputMessage + "]");
+
+                    if (inputMessage.equalsIgnoreCase("quit")) {
                         System.out.println("Client kill connection.");
                         break;
                     }

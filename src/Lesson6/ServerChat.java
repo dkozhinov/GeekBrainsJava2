@@ -38,13 +38,15 @@ public class ServerChat {
                 dataOutputStream.flush();
                 System.out.println("Server is waiting info from client...");
 
-                String msg = dataInputStream.readUTF();
-                System.out.println("Read info from client=" + msg);
+                String inputMessage = dataInputStream.readUTF();
+                System.out.println("Read info from client [" + inputMessage + "]");
+                dataOutputStream.writeUTF("Server accept message [" + inputMessage + "] from client.");
+                dataOutputStream.flush();
 
-                if (msg.equalsIgnoreCase("quit"))
+                if (inputMessage.equalsIgnoreCase("quit"))
                 {
-                    System.out.println("Received quit message from client and session will be closed.");
-                    dataOutputStream.writeUTF("Received quit message from client and session will be closed.");
+                    System.out.println("Received [quit] message from client and session will be closed.");
+                    dataOutputStream.writeUTF("Received [quit] message from client and session will be closed.");
                     dataOutputStream.flush();
                     break;
                 }
