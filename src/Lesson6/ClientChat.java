@@ -107,5 +107,8 @@ public class ClientChat {
     }
 
 
+    public static void main(String[] args) {
+        new ClientChat().start();
+    }
 
 }
