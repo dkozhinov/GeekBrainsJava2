@@ -18,7 +18,7 @@ public class ServerChat {
     private DataOutputStream dataOutputStream;
     private DataInputStream dataInputStream;
     private BufferedReader bufferedReader;
-    private String outputMessage, inputMessage;
+    private String readingMessage, writingMessage;
 
 
 
@@ -28,7 +28,7 @@ public class ServerChat {
         // Open Chat connection
         try {
             openConnection();
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -36,21 +36,21 @@ public class ServerChat {
         Thread readingServerTread = new ServerChat.ReadingServerThread();
         readingServerTread.start();
 
-
+/*
         // Writing to the DataOutputStream
         try {
             bufferedReader = new BufferedReader(new InputStreamReader(System.in));
 
-            while (!socket.isOutputShutdown()) {
+            while (true) {
                 if (bufferedReader.ready()) {
-                    inputMessage = bufferedReader.readLine();
+                    writingMessage = bufferedReader.readLine();
 
-                    dataOutputStream.writeUTF(inputMessage);
+                    dataOutputStream.writeUTF(writingMessage);
                     dataOutputStream.flush();
-                    System.out.println("Server sent message [" + inputMessage + "]");
+                    System.out.println("Server sent message [" + writingMessage + "]");
                     Thread.sleep(1000);
 
-                    if (inputMessage.equalsIgnoreCase("quit")) {
+                    if (writingMessage.equalsIgnoreCase("quit")) {
                         System.out.println("Server kill connection.");
                         break;
                     }
@@ -60,11 +60,11 @@ public class ServerChat {
             e.printStackTrace();
         }
 
-
+*/
         // Close Chat connection
         try {
             closeConnection();
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -73,18 +73,21 @@ public class ServerChat {
 
 
 
-    private void openConnection() throws IOException {
+    private void openConnection() throws Exception {
         serverSocket = new ServerSocket(SERVER_PORT);
         System.out.println("Server is started.");
         // We waiting connection with client.
         Socket socket = serverSocket.accept();
         dataInputStream = new DataInputStream(socket.getInputStream());
         dataOutputStream = new DataOutputStream(socket.getOutputStream());
+        Thread.sleep(3000);
         System.out.println("Connection was successful statemented.");
+
     }
 
 
-    private void closeConnection() throws IOException {
+    private void closeConnection() throws Exception {
+        Thread.sleep(3000);
         dataInputStream.close();
         dataOutputStream.close();
         socket.close();
@@ -99,11 +102,11 @@ public class ServerChat {
         @Override
         public void run() {
             try {
-                while (!socket.isOutputShutdown()) {
-                    outputMessage = dataInputStream.readUTF();
-                    System.out.println("Read info from client [" + outputMessage + "]");
+                while (true) {
+                    readingMessage = dataInputStream.readUTF();
+                    System.out.println("Read info from client [" + readingMessage + "]");
                     Thread.sleep(1000);
-                    if (inputMessage.equalsIgnoreCase("quit"))
+                    if (readingMessage.equalsIgnoreCase("quit"))
                     {
                         System.out.println("Received [quit] message from client and session will be closed.");
                         dataOutputStream.writeUTF("Received [quit] message from client and session will be closed.");

@@ -18,7 +18,7 @@ public class ClientChat {
     private DataOutputStream dataOutputStream;
     private DataInputStream dataInputStream;
     private BufferedReader bufferedReader;
-    private String outputMessage, inputMessage;
+    private String readingMessage, writingMessage;
 
 
 
@@ -29,7 +29,7 @@ public class ClientChat {
         // Open Chat connection
         try {
             openConnection();
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -42,16 +42,16 @@ public class ClientChat {
         try {
             bufferedReader = new BufferedReader(new InputStreamReader(System.in));
 
-            while (!socket.isOutputShutdown()) {
+            while (true) {
                 if (bufferedReader.ready()) {
-                    inputMessage = bufferedReader.readLine();
+                    writingMessage = bufferedReader.readLine();
 
-                    dataOutputStream.writeUTF(inputMessage);
+                    dataOutputStream.writeUTF(writingMessage);
                     dataOutputStream.flush();
-                    System.out.println("Client sent message [" + inputMessage + "]");
+                    System.out.println("Client sent message [" + writingMessage + "]");
                     Thread.sleep(1000);
 
-                    if (inputMessage.equalsIgnoreCase("quit")) {
+                    if (writingMessage.equalsIgnoreCase("quit")) {
                         System.out.println("Client kill connection.");
                         break;
                     }
@@ -65,7 +65,7 @@ public class ClientChat {
         // Close Chat connection
         try {
             closeConnection();
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -74,15 +74,17 @@ public class ClientChat {
 
 
 
-    private void openConnection() throws IOException {
+    private void openConnection() throws Exception {
         socket = new Socket(SERVER_ADDRESS, SERVER_PORT);
         dataInputStream = new DataInputStream(socket.getInputStream());
         dataOutputStream = new DataOutputStream(socket.getOutputStream());
+        Thread.sleep(3000);
         System.out.println("Client connected with server.");
     }
 
 
-    private void closeConnection() throws IOException {
+    private void closeConnection() throws Exception {
+        Thread.sleep(3000);
         dataInputStream.close();
         dataOutputStream.close();
         socket.close();
@@ -95,9 +97,9 @@ public class ClientChat {
         @Override
         public void run() {
             try {
-                while (!socket.isOutputShutdown()) {
-                    outputMessage = dataInputStream.readUTF();
-                    System.out.println("Read info from server [" + outputMessage + "]");
+                while (true) {
+                    readingMessage = dataInputStream.readUTF();
+                    System.out.println("Read info from server [" + readingMessage + "]");
                     Thread.sleep(1000);
                 }
             } catch (Exception e) {
