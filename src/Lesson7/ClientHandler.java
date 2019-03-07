@@ -20,7 +20,14 @@ public class ClientHandler implements Runnable {
     private PrintWriter outMsg;
     private Scanner inMsg;
     private static int clientCount = 0;
+    private String name;
 
+    private final String regexStartOfLineWithNickName = "^/[wW] \\w+";
+
+
+    public String getName() {
+        return this.name;
+    }
 
     public ClientHandler(Socket clientSocket, Server server)
     {
@@ -56,8 +63,25 @@ public class ClientHandler implements Runnable {
                     {
                         break;
                     }
-                    System.out.println(clientMsg);
-                    server.notificationAllClientWithNewMessage(clientMsg);
+                    else if (clientMsg.matches(regexStartOfLineWithNickName))
+                    {
+                        String[] array = clientMsg.split("\\s+");
+                        String userName = array[1];
+                        array = clientMsg.split(regexStartOfLineWithNickName);
+                        String textMessage = array[1];
+                        System.out.println(clientMsg + " (userName=" + userName + " textMessage=" + textMessage + ")");
+                        if (server.notificationClientWithNewMessage(textMessage, userName)) {
+                            System.out.println("Message was sent successfully to " + userName + ".");
+                        }
+                        else {
+                            System.out.println("Message was not sent to " + userName + ".");
+                        }
+                    }
+                    else {
+                        System.out.println(clientMsg);
+                        System.out.println("Message was sent successfully to all users.");
+                        server.notificationAllClientWithNewMessage(clientMsg);
+                    }
                 }
             }
 

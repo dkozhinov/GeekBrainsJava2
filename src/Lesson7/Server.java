@@ -65,6 +65,18 @@ public class Server {
 
     }
 
+    public boolean notificationClientWithNewMessage(String msg, String userName)
+    {
+        for (ClientHandler clientHandler : clientHandlers)
+        {
+            if (userName.equalsIgnoreCase(clientHandler.getName())) {
+                clientHandler.sendMessage(msg);
+                return true;
+            }
+        }
+        return false;
+    }
+
     public void removeClient(ClientHandler clientHandler)
     {
         clientHandlers.remove(clientHandler);
