@@ -9,7 +9,7 @@ package Lesson8.Client;
  * Created on 09.03.2019
  */
 
-public class ClientLauncher
+public class ClientLauncher2
 {
   public static void main(String[] args) {
     ChatClientWindow c = new ChatClientWindow();

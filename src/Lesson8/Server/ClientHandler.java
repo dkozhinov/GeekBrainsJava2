@@ -44,7 +44,7 @@ public class ClientHandler implements Runnable
     try
     {
       server.notificationAllClientWithNewMessage("New client in our chat");
-      server.notificationAllClientWithNewMessage("In our chat client count = " + clientCount);
+      server.notificationAllClientWithNewMessage("Count of client in chat :" + clientCount);
 
 
       while (true)
@@ -52,8 +52,9 @@ public class ClientHandler implements Runnable
         if (inMsg.hasNext())
         {
           String clientMsg = inMsg.nextLine();
-          if (clientMsg.equalsIgnoreCase("QUIT"))
+          if (clientMsg.equalsIgnoreCase("QUIT$"))
           {
+            System.out.println("Client send QUIT!!!");
             break;
           }
           System.out.println(clientMsg);
