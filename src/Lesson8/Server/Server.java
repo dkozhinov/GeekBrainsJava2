@@ -1,4 +1,7 @@
 package Lesson8.Server;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -17,11 +20,38 @@ import java.util.List;
 public class Server
 {
     private List<ClientHandler> clientHandlers = new ArrayList<>();
+    private ServerSocket serverSocket = null;
+    private Socket clientSocket = null;
 
     public Server()
     {
-        ServerSocket serverSocket = null;
-        Socket clientSocket = null;
+
+        new Thread(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                try {
+                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+
+                    System.out.println("Thread started!");
+                    while (true)
+                    {
+                        System.out.println("Thread cicle!");
+                        String writingMessage = bufferedReader.readLine();
+                        notificationAllClientWithNewMessage("Server: " + writingMessage);
+                        System.out.println("Server: " + writingMessage);
+
+                    }
+                }
+                catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+
+
+
         try
         {
             serverSocket = new ServerSocket(8888);
@@ -53,8 +83,10 @@ public class Server
             }
         }
 
-
     }
+
+
+
 
     public void notificationAllClientWithNewMessage(String msg)
     {
