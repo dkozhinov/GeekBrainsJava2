@@ -52,7 +52,7 @@ public class ClientHandler implements Runnable
         if (inMsg.hasNext())
         {
           String clientMsg = inMsg.nextLine();
-          if (clientMsg.equalsIgnoreCase("QUIT$"))
+          if (clientMsg.matches(".*[Qq][Uu][Ii][Tt]$"))
           {
             System.out.println("Client send QUIT!!!");
             break;
@@ -78,7 +78,8 @@ public class ClientHandler implements Runnable
   private void exitFromChat()
   {
     clientCount--;
-    server.notificationAllClientWithNewMessage("Client exited. In out chat = " + clientCount + " clients!");
+    server.notificationAllClientWithNewMessage("Client is out of our chat.");
+    server.notificationAllClientWithNewMessage("Count of client in chat :" + clientCount);
     server.removeClient(this);
   }
 
