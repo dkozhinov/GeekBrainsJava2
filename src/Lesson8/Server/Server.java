@@ -33,11 +33,8 @@ public class Server
             {
                 try {
                     BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-
-                    System.out.println("Thread started!");
                     while (true)
                     {
-                        System.out.println("Thread cicle!");
                         String writingMessage = bufferedReader.readLine();
                         notificationAllClientWithNewMessage("Server: " + writingMessage);
                         System.out.println("Server: " + writingMessage);

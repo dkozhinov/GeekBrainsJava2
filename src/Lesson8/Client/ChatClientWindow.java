@@ -45,11 +45,13 @@ public class ChatClientWindow extends JFrame {
     private Scanner inMsg;
     private PrintWriter outMsg;
 
+    private final int TIMEOUT = 120;  // Отключение по таймауту через 120 сек
+
 
 
     public ChatClientWindow() throws HeadlessException {
 
-        super("Окно для клиентской части чата");
+        super("Мой чат (клиент)");
 
         try
         {
@@ -114,7 +116,7 @@ public class ChatClientWindow extends JFrame {
         setSize(800, 600);
         setVisible(true);
 
-
+        // Поток для обновления окна сообщений textArea
         new Thread(new Runnable()
         {
             @Override
@@ -142,6 +144,25 @@ public class ChatClientWindow extends JFrame {
         }).start();
 
 
+        // Поток для проверки неавторизованных пользователей и отключение по таймауту через TIMEOUT сек
+        new Thread(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                    for(int i=0; i< TIMEOUT; i++) {
+                        try {
+                            Thread.sleep(1000);
+                        }
+                        catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    if (textNickName.getText().trim().isEmpty()) {
+                        sendMsg("QUIT");
+                    }
+            }
+        }).start();
 
 
     }
@@ -170,6 +191,13 @@ public class ChatClientWindow extends JFrame {
         }
     }
 
+    private void sendMsg(String msg)
+    {
+            LocalDateTime dateTime = LocalDateTime.now(); // gets the current date and time
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+            outMsg.println("[" + dateTime.format(formatter) + "] " + textNickName.getText() + ": " + msg + "\n");
+            outMsg.flush();
+    }
 
 }
 
